@@ -6,10 +6,6 @@
 	<artifactId>exam-magic</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
-	<modules>
-		<module>exam-magic-core</module>
-		<module>exam-magic-services</module>
-	</modules>
 	<build>
 		<plugins>
 			<plugin>
@@ -25,4 +21,10 @@
 			</plugin>
 		</plugins>
 	</build>
+	<modules>
+		<module>exam-magic-core</module>
+		<module>exam-magic-services</module>
+		<module>exam-magic-data</module>
+		<module>exam-magic-integration-test</module>
+	</modules>
 </project>
