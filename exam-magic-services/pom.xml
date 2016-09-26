@@ -9,6 +9,7 @@
   <packaging>pom</packaging>
   <modules>
   	<module>exam-magic-services-api</module>
-  	
+
+  	<module>exam-magic-services-impl</module>
   </modules>
 </project>
