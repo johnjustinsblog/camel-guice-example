@@ -5,6 +5,8 @@
     <artifactId>exam-magic-services</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
+  <groupId>com.johnjustin.web</groupId>
   <artifactId>exam-magic-services-api</artifactId>
-  <name>exam-magic-services-api</name>
+  <version>0.0.1-SNAPSHOT</version>
+   <name>exam-magic-services-api</name>
 </project>
