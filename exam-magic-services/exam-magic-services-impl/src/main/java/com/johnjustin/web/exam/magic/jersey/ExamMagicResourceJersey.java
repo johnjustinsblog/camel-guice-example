@@ -41,6 +41,7 @@ public class ExamMagicResourceJersey implements ExamMagicResource{
 		}
 		
 		
+		
 		return response;
 	}
 	
