@@ -8,11 +8,14 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
+import org.apache.camel.CamelExecutionException;
 import org.apache.camel.Produce;
 import org.apache.camel.ProducerTemplate;
+import org.apache.camel.processor.validation.PredicateValidationException;
 
 import com.johnjustin.exam.magic.services.ExamMagicResource;
 import com.johnjustin.web.exam.magic.core.ExamUser;
+import com.johnjustin.web.exam.magic.data.exception.RepositoryException;
 
 public class ExamMagicResourceJersey implements ExamMagicResource{
 	
@@ -33,14 +36,31 @@ public class ExamMagicResourceJersey implements ExamMagicResource{
 			if(null != students){
 				response = Response.status(Status.OK).type(MediaType.APPLICATION_JSON_TYPE).entity(students).build();
 			}
-		}catch(Exception e){
-			
+		}catch(CamelExecutionException e){
+			response = processException(e);
 		}
 		
 		
-		return null;
+		return response;
+	}
+	
+	private Response processException(Exception exception){
 		
+		Response response = null;
 		
+		if(exception.getCause() instanceof PredicateValidationException){
+			
+			PredicateValidationException exec = (PredicateValidationException) exception.getCause();
+			response = response.status(Status.NOT_FOUND).entity(exec.getExchange().getProperty("exception")).build();
+		}else if(exception.getCause() instanceof RepositoryException){
+			
+			RepositoryException exe = (RepositoryException) exception.getCause();
+			response = response.status(Status.BAD_REQUEST).entity(exe.getMessage()).build();
+		}else{
+			response = response.serverError().build();
+		}
+		
+		return response;
 	}
 
 }
