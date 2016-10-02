@@ -9,4 +9,34 @@
   <artifactId>exam-magic-services-api</artifactId>
   <version>0.0.1-SNAPSHOT</version>
    <name>exam-magic-services-api</name>
+   
+    <dependencies>
+    	<dependency>
+	      <groupId>com.sun.jersey</groupId>
+	      <artifactId>jersey-json</artifactId>
+	      <version>${jersey.version}</version>
+	    </dependency>
+	    <dependency>
+	      <groupId>com.johnjustin.web</groupId>
+	      <artifactId>exam-magic-core</artifactId>
+	      <version>${project.version}</version>
+	    </dependency>
+	     <dependency>
+	      <groupId>com.sun.jersey</groupId>
+	      <artifactId>jersey-client</artifactId>
+	      <version>${jersey.version}</version>
+	    </dependency>
+	    <dependency>
+	      <groupId>com.sun.jersey.contribs</groupId>
+	      <artifactId>jersey-multipart</artifactId>
+	      <version>${jersey.version}</version>
+	    </dependency>
+    </dependencies>
+    <build>
+    		<resources>
+	    		<resource>
+	    			<directory>src/main/resources</directory>
+	    		</resource>
+    		</resources>
+     </build>
 </project>
