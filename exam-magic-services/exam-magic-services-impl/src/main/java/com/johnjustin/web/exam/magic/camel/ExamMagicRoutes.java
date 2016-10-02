@@ -24,6 +24,14 @@ public class ExamMagicRoutes extends RouteBuilder{
 		.validate(body().isNotNull())
 		.bean(examMagicAssessment, "addMethod(${property.id} , ${property.mydiv})");
 		
+		
+		
+		from("direct:getExamUser")
+		.routeId("direct:getExamUser")
+		.log("getExamUser route")
+		.validate(body().isNotNull())
+		.bean(examMagicAssessment, "getExamUser(${property.id})");
+		
 	}
 
 }

@@ -8,6 +8,8 @@ import org.apache.commons.configuration.Configuration;
 
 
 import com.google.inject.AbstractModule;
+import com.johnjustin.exam.magic.data.ExamMagicAssessment;
+import com.johnjustin.exam.magic.data.impl.ExamMagicAssessmentImpl;
 
 /* initializes the db connection and session Guice injection to session and properties */
 
@@ -24,7 +26,7 @@ public final class ExamMagicDataModule extends AbstractModule{
 	@Override
 	protected void configure(){
 		
-		//bind(interface.class).to(implementation.class);
+		bind(ExamMagicAssessment.class).to(ExamMagicAssessmentImpl.class);
 		//configureCassandra();
 		//bind(Session.class).toInstance(session);
 	}
