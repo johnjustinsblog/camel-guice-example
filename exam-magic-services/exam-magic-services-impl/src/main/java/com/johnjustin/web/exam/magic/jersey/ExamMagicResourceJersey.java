@@ -31,7 +31,6 @@ public class ExamMagicResourceJersey implements ExamMagicResource{
 		try {
 			Map<String,Object> paramMap = new HashMap<String,Object>();
 			paramMap.put("userId", userId);			
-			
 			students = (List<ExamUser>)producer.requestBodyAndHeaders("direct:getExamUser",null,paramMap,List.class);
 			if(null != students){
 				response = Response.status(Status.OK).type(MediaType.APPLICATION_JSON_TYPE).entity(students).build();
@@ -39,8 +38,6 @@ public class ExamMagicResourceJersey implements ExamMagicResource{
 		}catch(CamelExecutionException e){
 			response = processException(e);
 		}
-		
-		
 		
 		return response;
 	}

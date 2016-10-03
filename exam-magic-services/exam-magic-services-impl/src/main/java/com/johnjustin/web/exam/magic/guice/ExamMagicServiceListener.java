@@ -63,6 +63,7 @@ public class ExamMagicServiceListener extends GuiceServletContextListener{
 			Injector injector = Guice.createInjector(modules);
 			return injector;
 			
+			
 		}catch(ConfigurationException | org.apache.commons.configuration.ConfigurationException exception){
 			throw new RuntimeException("Failure reading conf files"+configFile, exception);
 		}

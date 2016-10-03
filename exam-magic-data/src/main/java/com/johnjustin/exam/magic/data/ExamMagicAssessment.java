@@ -2,6 +2,8 @@ package com.johnjustin.exam.magic.data;
 
 public interface ExamMagicAssessment {
 	
-	public void myTest(String id , String myDiv);
+	public String myTest();
+	
+	public String assignExamToUser(String userid , String std);
 
 }
