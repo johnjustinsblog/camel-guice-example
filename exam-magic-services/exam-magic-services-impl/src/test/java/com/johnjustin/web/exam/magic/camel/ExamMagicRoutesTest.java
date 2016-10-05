@@ -109,9 +109,6 @@ public class ExamMagicRoutesTest extends CamelTestSupport{
 		return new Object[][]{{ HttpStatus.SC_OK , userId }};
 	}
 	
-	
-	
-	
 	@Test(enabled = true, description="test for getExamUser routes", dataProvider = "getStudentInput")
 	public void getExamUserTest(final int status, String userid)throws Exception{
 		
@@ -120,6 +117,7 @@ public class ExamMagicRoutesTest extends CamelTestSupport{
 		String actual = null;
 	when(examMagicAssessment.getMarksToUser(Mockito.anyString())).thenReturn("58");
 	context.start();
+	
 	
 	context.getRouteDefinition("direct:getExamUserValidate").adviceWith(context, new AdviceWithRouteBuilder() {
 		
