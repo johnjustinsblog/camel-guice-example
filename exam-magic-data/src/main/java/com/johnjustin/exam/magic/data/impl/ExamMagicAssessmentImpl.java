@@ -17,4 +17,10 @@ public class ExamMagicAssessmentImpl implements ExamMagicAssessment{
 		
 	}
 
+	
+	@Override
+	public String getMarksToUser( String std){
+		String marks ="58";
+		return marks;
+	}
 }

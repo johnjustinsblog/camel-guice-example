@@ -13,7 +13,7 @@ public class AssignExamToUserProcessor implements Processor{
 		Map<String , Object> headerParam = exchange.getIn().getHeaders();
 		if(headerParam.containsKey("userid")){
 			exchange.getIn().setHeader("userid", headerParam.get("userid"));
-			exchange.setProperty("std", headerParam.get("std"));
+			exchange.setProperty("userid", headerParam.get("std"));
 		}
 		
 	}

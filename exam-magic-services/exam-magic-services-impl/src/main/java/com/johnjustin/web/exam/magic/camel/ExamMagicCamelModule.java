@@ -8,6 +8,7 @@ public class ExamMagicCamelModule extends CamelModuleWithMatchingRoutes{
 	
 	public ExamMagicCamelModule(){
 		
+		
 		super(Matchers.inPackage(Package.getPackage("com.johnjustin.web.exam.magic.camel")).and
 				(Matchers.subclassesOf(RouteBuilder.class)));
 	}
@@ -15,6 +16,6 @@ public class ExamMagicCamelModule extends CamelModuleWithMatchingRoutes{
 	@Override
 	protected final void configure(){
 		super.configure();
-		//bind(MyRoutes.class);
+		bind(ExamMagicRoutes.class);
 	}
 }
