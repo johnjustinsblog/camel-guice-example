@@ -58,7 +58,7 @@ public class ExamMagicServiceListener extends GuiceServletContextListener{
 			dataModule = new ExamMagicDataModule(conf);
 			modules.add(dataModule);
 			modules.add(new ExamMagicServeltModule());
-			modules.add(new ExamMagicCamelModule());
+			modules.add(new ExamMagicCamelModule(conf));
 			
 			Injector injector = Guice.createInjector(modules);
 			return injector;
