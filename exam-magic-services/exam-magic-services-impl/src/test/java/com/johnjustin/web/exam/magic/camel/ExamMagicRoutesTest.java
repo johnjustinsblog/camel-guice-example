@@ -3,6 +3,7 @@ package com.johnjustin.web.exam.magic.camel;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,6 +18,7 @@ import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.processor.validation.PredicateValidationException;
 import org.apache.camel.test.junit4.CamelTestSupport;
 import org.apache.http.HttpStatus;
+import org.codehaus.jettison.json.JSONObject;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.testng.annotations.BeforeClass;
@@ -156,5 +158,67 @@ public class ExamMagicRoutesTest extends CamelTestSupport{
 	}
 	
 	//################################################################//
+	
+	@Test(enabled = true, description="test for getMarksAndAttendance routes", dataProvider = "getStudentInput")
+	public void getMarksAndAttendanceTest(final int status, String userid)throws Exception{
+		JSONObject actual = new JSONObject();
+		List<String> marks = new ArrayList<String>();
+		marks.add("25");
+		marks.add("26");
+		marks.add("27");
+		marks.add("28");
+		marks.add("29");
+		List<String> attendance = new ArrayList<String>();
+		attendance.add("15");
+		attendance.add("16");
+		attendance.add("17");
+		attendance.add("18");
+		attendance.add("19");
+		context.start();
+		
+		context.getRouteDefinition("direct:getMarksAndAttendance").adviceWith(context, new AdviceWithRouteBuilder() {
+
+			@Override
+			public void configure() throws Exception {
+				interceptSendToEndpoint("direct:getMarks")
+				.skipSendToOriginalEndpoint()
+				.to("mock:getMarks")
+				.process(new Processor() {
+					
+					@Override
+					public void process(Exchange exchange) throws Exception {
+						exchange.getIn().setHeader("marks",simple("true"));
+						exchange.getIn().setBody(marks);
+					}
+				});
+				interceptSendToEndpoint("direct:getAttendance")
+				.skipSendToOriginalEndpoint()
+				.to("mock:Attendance")
+				.process(new Processor() {
+					@Override
+					public void process(Exchange exchange) throws Exception {
+						exchange.getIn().setHeader("attendance",simple("true"));
+						exchange.getIn().setBody(attendance);
+					}
+				});
+			}
+		});
+		try{
+			Map<String,Object> paramMap = new HashMap<String,Object>();
+			paramMap.put("userid", "james");
+			paramMap.put("std", "5th");
+			actual = producer.requestBodyAndHeaders("direct:getMarksAndAttendance",paramMap,paramMap,JSONObject.class);
+			 
+		}catch(CamelExecutionException e){
+			if(status == 404){
+				assertTrue(e.getCause() instanceof PredicateValidationException);
+			}else{
+				fail();
+			}
+		}
+		if(status == 200){
+			assertNotNull(actual);
+		}
+	}
 }
 

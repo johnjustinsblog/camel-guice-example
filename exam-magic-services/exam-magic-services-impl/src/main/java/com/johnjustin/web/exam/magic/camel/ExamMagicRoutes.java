@@ -10,6 +10,8 @@ import org.apache.camel.converter.jaxb.JaxbDataFormat;
 
 import com.google.inject.Inject;
 import com.johnjustin.exam.magic.data.ExamMagicAssessment;
+import com.johnjustin.web.exam.aggregator.MarksAttendanceAggregator;
+import com.johnjustin.web.exam.aggregator.StudentMarksAggregator;
 import com.johnjustin.web.exam.magic.predicates.StudentPredicate;
 import com.johnjustin.web.exam.magic.processors.AssignExamToUserProcessor;
 import com.sun.jersey.server.wadl.generators.ObjectFactory;
@@ -73,6 +75,29 @@ public class ExamMagicRoutes extends RouteBuilder{
 		.setBody(constant(true))
 		.end();
 		
+		
+		from("direct:getMarksAndAttendance")
+		.routeId("direct:getMarksAndAttendance")
+		.log(LoggingLevel.INFO,"route for direct:getMarksAndAttendance")
+		.multicast()
+		.aggregationStrategy(new MarksAttendanceAggregator())
+		.parallelProcessing()
+		.to("direct:getMarks" , "direct:getAttendance")
+		.end();
+		
+		
+		from("direct:getMarks")
+		.setHeader("marks",simple("true"))
+		.routeId("direct:getMarks")
+		.log("direct:getMarks")
+		.bean(examMagicAssessment, "getMarks()");
+		
+		
+		from("direct:getAttendance")
+		.setHeader("attendance",simple("true"))
+		.routeId("direct:getAttendance")
+		.log("direct:getAttendance")
+		.bean(examMagicAssessment, "getAttendance()");
 		
 		
 		
